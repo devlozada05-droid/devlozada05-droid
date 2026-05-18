@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HydroSpecs — Equip · Supply · Maintain</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #0d2d5e; --navy-dark: #091e42; --navy-mid: #1a4080;
+      --blue: #1e6ab4; --blue-bright: #2e8de8;
+      --sky: #e8f4fd; --sky-mid: #c5e0f7;
+      --white: #ffffff; --off: #f5f8fc; --gray: #6b7c93;
+      --border: #d4e3f5; --gold: #f5a623; --radius: 14px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Outfit', sans-serif; background: var(--white); color: var(--navy-dark); line-height: 1.6; overflow-x: hidden; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 6vw; height: 68px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-drop { width: 36px; height: 36px; background: var(--navy); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .logo-drop svg { width: 18px; height: 18px; fill: white; }
+    .logo-name { font-size: 1.3rem; font-weight: 700; color: var(--navy); letter-spacing: -0.02em; }
+    .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--gray); font-size: 0.88rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--navy); }
+    .nav-actions { display: flex; gap: 0.8rem; align-items: center; }
+    .btn-ghost { background: none; border: 1.5px solid var(--border); color: var(--navy); padding: 0.45rem 1.1rem; border-radius: 8px; font-family: 'Outfit', sans-serif; font-size: 0.88rem; font-weight: 500; cursor: pointer; transition: border-color 0.2s, background 0.2s; }
+    .btn-ghost:hover { background: var(--sky); border-color: var(--blue-bright); }
+    .btn-navy { background: var(--navy); color: var(--white); border: none; padding: 0.5rem 1.3rem; border-radius: 8px; font-family: 'Outfit', sans-serif; font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+    .btn-navy:hover { background: var(--navy-mid); }
+
+    .hero {
+      min-height: 92vh;
+      background: linear-gradient(160deg, var(--navy-dark) 0%, var(--navy) 50%, var(--navy-mid) 100%);
+      display: flex; align-items: center;
+      padding: 5rem 6vw 4rem;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='2' fill='%232e8de8' fill-opacity='0.06'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .hero-blob { position: absolute; right: -100px; top: -80px; width: 600px; height: 600px; background: radial-gradient(circle, rgba(46,141,232,0.18) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
+    .hero-blob2 { position: absolute; left: -60px; bottom: -100px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(46,141,232,0.1) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
+    .hero-inner { max-width: 1200px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; position: relative; z-index: 1; }
+    .hero-tag { display: inline-flex; align-items: center; gap: 6px; background: rgba(46,141,232,0.2); border: 1px solid rgba(46,141,232,0.4); color: #7ec8f7; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.35rem 0.9rem; border-radius: 999px; margin-bottom: 1.5rem; }
+    h1 { font-family: 'Fraunces', serif; font-size: clamp(2.6rem, 4.5vw, 4rem); font-weight: 700; color: var(--white); line-height: 1.1; margin-bottom: 1.3rem; letter-spacing: -0.02em; }
+    h1 span { color: var(--blue-bright); font-style: italic; font-weight: 300; }
+    .hero-sub { font-size: 1.1rem; color: rgba(255,255,255,0.7); max-width: 480px; margin-bottom: 2.5rem; line-height: 1.7; }
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-hero-primary { background: var(--white); color: var(--navy); border: none; padding: 0.9rem 2rem; border-radius: var(--radius); font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 700; cursor: pointer; transition: transform 0.15s, box-shadow 0.2s; }
+    .btn-hero-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.25); }
+    .btn-hero-secondary { background: transparent; color: var(--white); border: 1.5px solid rgba(255,255,255,0.35); padding: 0.9rem 2rem; border-radius: var(--radius); font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 500; cursor: pointer; transition: border-color 0.2s, background 0.2s; }
+    .btn-hero-secondary:hover { border-color: white; background: rgba(255,255,255,0.1); }
+    .hero-trust { margin-top: 2.5rem; display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+    .hero-trust-item { font-size: 0.82rem; color: rgba(255,255,255,0.55); font-weight: 500; display: flex; align-items: center; gap: 5px; }
+    .hero-trust-item::before { content: '✓'; color: #4de0a0; font-weight: 700; }
+
+    .phone-stack { position: relative; display: flex; justify-content: center; align-items: center; height: 580px; }
+    .phone { position: absolute; width: 220px; background: #111; border-radius: 32px; padding: 10px; box-shadow: 0 30px 80px rgba(0,0,0,0.5); transition: transform 0.3s, opacity 0.3s, z-index 0.01s; }
+    .phone-screen { border-radius: 24px; overflow: hidden; background: var(--white); aspect-ratio: 9/19.5; display: flex; flex-direction: column; }
+    .phone:nth-child(1) { transform: rotate(-12deg) translateX(-90px) translateY(20px); z-index: 1; opacity: 0.82; }
+    .phone:nth-child(2) { transform: rotate(0deg); z-index: 3; width: 240px; animation: float 4s ease-in-out infinite; }
+    .phone:nth-child(3) { transform: rotate(12deg) translateX(90px) translateY(20px); z-index: 1; opacity: 0.82; }
+    .phone:hover { transform: rotate(0deg) translateY(-8px) !important; z-index: 5 !important; opacity: 1 !important; animation: none !important; }
+    @keyframes float { 0%,100%{transform:rotate(0deg) translateY(0)} 50%{transform:rotate(0deg) translateY(-10px)} }
+
+    .ps-topbar { background: var(--navy); padding: 10px 14px 8px; color: white; font-size: 8.5px; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+    .ps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 8px; background: var(--off); flex: 1; overflow: hidden; }
+    .ps-card { background: white; border-radius: 8px; padding: 6px; border: 1px solid var(--border); }
+    .ps-img { width: 100%; height: 44px; background: var(--sky); border-radius: 5px; margin-bottom: 4px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+    .ps-name { font-weight: 600; font-size: 6.5px; margin-bottom: 2px; color: var(--navy); }
+    .ps-price { font-weight: 700; font-size: 8px; color: var(--blue); }
+    .ps-nav { border-top: 1px solid var(--border); padding: 6px 0 4px; display: flex; justify-content: space-around; background: white; font-size: 13px; }
+    .ps-list { padding: 7px; background: var(--off); flex: 1; display: flex; flex-direction: column; gap: 5px; overflow: hidden; }
+    .ps-order { background: white; border-radius: 6px; padding: 6px; border: 1px solid var(--border); display: flex; gap: 5px; align-items: center; }
+    .ps-order-img { width: 28px; height: 28px; background: var(--sky); border-radius: 4px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 13px; }
+    .ps-order-name { font-size: 6.5px; font-weight: 600; color: var(--navy); line-height: 1.3; }
+    .ps-order-meta { font-size: 6px; color: var(--gray); margin-top: 2px; display: flex; align-items: center; gap: 4px; }
+    .ps-badge { font-size: 5.5px; background: #e8f8ef; color: #1a8c4e; padding: 1px 4px; border-radius: 3px; font-weight: 700; }
+    .ps-product { flex: 1; display: flex; flex-direction: column; }
+    .ps-hero-img { background: linear-gradient(135deg, #e0f0ff, #c5e0f7); height: 110px; display: flex; align-items: center; justify-content: center; font-size: 44px; }
+    .ps-detail { padding: 8px; flex: 1; }
+    .ps-detail-name { font-size: 8px; font-weight: 700; color: var(--navy); margin-bottom: 2px; }
+    .ps-detail-price { font-size: 13px; font-weight: 800; color: var(--navy); margin-bottom: 3px; }
+    .ps-detail-stars { font-size: 7.5px; color: var(--gold); margin-bottom: 5px; }
+    .ps-detail-desc { font-size: 6px; color: var(--gray); line-height: 1.5; }
+    .ps-btns { display: flex; gap: 5px; padding: 6px 8px; background: white; border-top: 1px solid var(--border); }
+    .ps-btn { flex: 1; background: var(--navy); color: white; border: none; border-radius: 5px; padding: 5px 2px; font-size: 6.5px; font-weight: 700; text-align: center; }
+
+    .stats-bar { background: var(--navy-dark); padding: 2.5rem 6vw; display: flex; justify-content: center; gap: 5rem; flex-wrap: wrap; }
+    .stat { text-align: center; }
+    .stat-num { font-size: 2.2rem; font-weight: 800; color: var(--white); line-height: 1; margin-bottom: 0.3rem; }
+    .stat-num span { color: var(--blue-bright); }
+    .stat-label { font-size: 0.75rem; color: rgba(255,255,255,0.45); font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; }
+
+    .section-eyebrow { text-align: center; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.7rem; }
+    h2 { font-family: 'Fraunces', serif; font-size: clamp(2rem, 3vw, 2.8rem); font-weight: 700; text-align: center; color: var(--navy-dark); margin-bottom: 0.8rem; letter-spacing: -0.02em; }
+    .section-sub { text-align: center; font-size: 1rem; color: var(--gray); margin-bottom: 3.5rem; max-width: 500px; margin-left: auto; margin-right: auto; }
+
+    .categories { padding: 7rem 6vw; background: var(--off); }
+    .cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.2rem; max-width: 1100px; margin: 0 auto; }
+    .cat-card { background: var(--white); border: 1.5px solid var(--border); border-radius: 18px; padding: 2rem 1.5rem; text-align: center; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s; }
+    .cat-card:hover { transform: translateY(-5px); box-shadow: 0 12px 40px rgba(13,45,94,0.12); border-color: var(--blue-bright); }
+    .cat-icon { width: 64px; height: 64px; background: var(--sky); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 1.2rem; transition: background 0.2s; }
+    .cat-card:hover .cat-icon { background: var(--sky-mid); }
+    .cat-name { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.4rem; }
+    .cat-desc { font-size: 0.85rem; color: var(--gray); line-height: 1.5; }
+    .cat-count { display: inline-block; margin-top: 1rem; background: var(--sky); color: var(--blue); font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.7rem; border-radius: 999px; }
+
+    .how { padding: 7rem 6vw; background: var(--white); }
+    .how-inner { max-width: 1000px; margin: 0 auto; }
+    .how-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3.5rem; position: relative; }
+    .how-steps::before { content: ''; position: absolute; top: 32px; left: 16%; right: 16%; height: 2px; background: linear-gradient(90deg, var(--sky-mid), var(--blue-bright), var(--sky-mid)); z-index: 0; }
+    .step { text-align: center; position: relative; z-index: 1; }
+    .step-num { width: 64px; height: 64px; background: var(--navy); color: var(--white); font-size: 1.3rem; font-weight: 800; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.3rem; border: 4px solid var(--white); box-shadow: 0 0 0 2px var(--navy); }
+    .step h3 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
+    .step p { font-size: 0.88rem; color: var(--gray); line-height: 1.6; }
+
+    .features { padding: 7rem 6vw; background: var(--navy-dark); }
+    .features h2 { color: var(--white); }
+    .features .section-eyebrow { color: var(--blue-bright); }
+    .features .section-sub { color: rgba(255,255,255,0.55); }
+    .feat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; max-width: 1100px; margin: 0 auto; }
+    .feat-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 2rem; transition: background 0.2s, border-color 0.2s; }
+    .feat-card:hover { background: rgba(46,141,232,0.12); border-color: rgba(46,141,232,0.35); }
+    .feat-icon { font-size: 1.8rem; margin-bottom: 1.1rem; }
+    .feat-card h3 { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem; }
+    .feat-card p { font-size: 0.88rem; color: rgba(255,255,255,0.55); line-height: 1.6; }
+
+    .testimonials { padding: 7rem 6vw; background: var(--off); }
+    .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; max-width: 1100px; margin: 0 auto; }
+    .testi-card { background: var(--white); border: 1px solid var(--border); border-radius: 18px; padding: 2rem; }
+    .testi-stars { color: var(--gold); font-size: 1rem; margin-bottom: 1rem; letter-spacing: 2px; }
+    .testi-text { font-size: 0.95rem; color: var(--navy-dark); line-height: 1.7; margin-bottom: 1.5rem; font-style: italic; }
+    .testi-author { display: flex; align-items: center; gap: 0.8rem; }
+    .testi-avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--navy); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; color: white; }
+    .testi-name { font-weight: 700; font-size: 0.9rem; color: var(--navy); }
+    .testi-role { font-size: 0.78rem; color: var(--gray); }
+
+    .cta-section { background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%); padding: 7rem 6vw; text-align: center; position: relative; overflow: hidden; }
+    .cta-section h2 { color: var(--white); }
+    .cta-section p { color: rgba(255,255,255,0.7); font-size: 1.05rem; margin-bottom: 2.5rem; }
+    .cta-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .app-btn { display: inline-flex; align-items: center; gap: 10px; background: var(--white); color: var(--navy); border: none; padding: 0.9rem 1.6rem; border-radius: var(--radius); font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: transform 0.15s; }
+    .app-btn:hover { transform: translateY(-2px); }
+    .app-btn-icon { font-size: 1.4rem; }
+    .app-btn-text { text-align: left; }
+    .app-btn-text small { display: block; font-size: 0.65rem; font-weight: 500; opacity: 0.55; letter-spacing: 0.05em; text-transform: uppercase; }
+
+    footer { background: var(--navy-dark); padding: 3.5rem 6vw 2rem; color: rgba(255,255,255,0.45); }
+    .footer-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+    .footer-tagline { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin: 0.5rem 0 1rem; }
+    .footer-desc { font-size: 0.85rem; line-height: 1.7; max-width: 240px; }
+    .footer-col h4 { font-size: 0.85rem; font-weight: 700; color: rgba(255,255,255,0.8); margin-bottom: 1rem; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-col ul li a { font-size: 0.83rem; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+    .footer-col ul li a:hover { color: rgba(255,255,255,0.8); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; max-width: 1100px; margin: 0 auto; }
+    .footer-brand-logo { display: flex; align-items: center; gap: 8px; margin-bottom: 0.5rem; }
+    .footer-brand-logo .logo-name { color: white; }
+
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .phone-stack { height: 360px; }
+      .phone { width: 160px; }
+      .phone:nth-child(1) { transform: rotate(-10deg) translateX(-65px) translateY(15px); }
+      .phone:nth-child(2) { width: 180px; }
+      .phone:nth-child(3) { transform: rotate(10deg) translateX(65px) translateY(15px); }
+      .how-steps { grid-template-columns: 1fr; }
+      .how-steps::before { display: none; }
+      .footer-inner { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+      .stats-bar { gap: 2.5rem; }
+    }
+    @media (max-width: 600px) {
+      .footer-inner { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="logo" href="#">
+      <div class="logo-drop"><svg viewBox="0 0 24 24"><path d="M12 2C12 2 5 9.5 5 14.5C5 18.09 8.13 21 12 21C15.87 21 19 18.09 19 14.5C19 9.5 12 2 12 2Z"/></svg></div>
+      <span class="logo-name">HydroSpecs</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#categories">Products</a></li>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-ghost">Log in</button>
+      <button class="btn-navy">Download App</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-blob"></div>
+    <div class="hero-blob2"></div>
+    <div class="hero-inner">
+      <div>
+        <div class="hero-tag">💧 Now available on iOS &amp; Android</div>
+        <h1>Your <span>complete supply hub</span> for water refilling stations</h1>
+        <p class="hero-sub">Order filters, consumables, machine parts, and station tools — all in one place. Fast delivery to your station, every time.</p>
+        <div class="hero-ctas">
+          <button class="btn-hero-primary">📱 Download Free App</button>
+          <button class="btn-hero-secondary">Browse Products →</button>
+        </div>
+        <div class="hero-trust">
+          <div class="hero-trust-item">Free to join</div>
+          <div class="hero-trust-item">Fast delivery</div>
+          <div class="hero-trust-item">100% genuine parts</div>
+        </div>
+      </div>
+
+      <!-- 3-phone mockup -->
+      <div class="phone-stack">
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="ps-topbar">🧴 Consumables</div>
+            <div class="ps-grid">
+              <div class="ps-card"><div class="ps-img">🔵</div><div class="ps-name">Cap Seals 100pcs</div><div class="ps-price">₱52.00</div></div>
+              <div class="ps-card"><div class="ps-img">💧</div><div class="ps-name">Water Container 20L</div><div class="ps-price">₱157.00</div></div>
+              <div class="ps-card"><div class="ps-img">🔵</div><div class="ps-name">Small Cap 10pcs</div><div class="ps-price">₱50.00</div></div>
+              <div class="ps-card"><div class="ps-img">🔴</div><div class="ps-name">Big Rotary Faucet</div><div class="ps-price">₱142.00</div></div>
+            </div>
+            <div class="ps-nav">🏠 📋 🛒 👤</div>
+          </div>
+        </div>
+
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="ps-topbar">← HydroSpecs</div>
+            <div class="ps-product">
+              <div class="ps-hero-img">🔵</div>
+              <div class="ps-detail">
+                <div class="ps-detail-name">PP Sediment Water Filter</div>
+                <div class="ps-detail-price">₱342.00</div>
+                <div class="ps-detail-stars">⭐⭐⭐⭐⭐ 4.9 · 583 Sold</div>
+                <div class="ps-detail-desc">First-Stage Defense: Removes sand, rust, silt, and dirt. Standard 10-inch size compatible with most RO systems.</div>
+              </div>
+              <div class="ps-btns">
+                <div class="ps-btn">🛒 Add to cart</div>
+                <div class="ps-btn">Buy now</div>
+              </div>
+            </div>
+            <div class="ps-nav">🏠 📋 🛒 👤</div>
+          </div>
+        </div>
+
+        <div class="phone">
+          <div class="phone-screen">
+            <div style="background:white;padding:9px 10px;font-size:9px;font-weight:700;color:var(--navy);text-align:center;border-bottom:1px solid var(--border);">Order History</div>
+            <div class="ps-list">
+              <div class="ps-order"><div class="ps-order-img">🔵</div><div><div class="ps-order-name">Cap Seals Refilling Station</div><div class="ps-order-meta">₱52.00 <span class="ps-badge">Delivered</span></div></div></div>
+              <div class="ps-order"><div class="ps-order-img">💧</div><div><div class="ps-order-name">Water Container Zooey 20L</div><div class="ps-order-meta">₱157.00 <span class="ps-badge">Delivered</span></div></div></div>
+              <div class="ps-order"><div class="ps-order-img">🔩</div><div><div class="ps-order-name">RO Membrane Filter</div><div class="ps-order-meta">₱645.00 <span class="ps-badge">Delivered</span></div></div></div>
+              <div class="ps-order"><div class="ps-order-img">🔧</div><div><div class="ps-order-name">Big Rotary Faucet 10PCS</div><div class="ps-order-meta">₱142.00 <span class="ps-badge">Delivered</span></div></div></div>
+              <div class="ps-order"><div class="ps-order-img">🟢</div><div><div class="ps-order-name">Shell Activated Carbon Block</div><div class="ps-order-meta">₱159.00 <span class="ps-badge">Delivered</span></div></div></div>
+            </div>
+            <div class="ps-nav">🏠 📋 🛒 👤</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stat"><div class="stat-num">500<span>+</span></div><div class="stat-label">Active Stations</div></div>
+    <div class="stat"><div class="stat-num">4<span>,</span>200<span>+</span></div><div class="stat-label">Orders Fulfilled</div></div>
+    <div class="stat"><div class="stat-num">4.9<span>★</span></div><div class="stat-label">App Store Rating</div></div>
+    <div class="stat"><div class="stat-num">48<span>h</span></div><div class="stat-label">Avg. Delivery</div></div>
+  </div>
+
+  <!-- CATEGORIES -->
+  <section class="categories" id="categories">
+    <p class="section-eyebrow">Product Categories</p>
+    <h2>Everything your station needs</h2>
+    <p class="section-sub">From daily consumables to heavy machine parts — sourced, packed, and shipped directly to you.</p>
+    <div class="cat-grid">
+      <div class="cat-card"><div class="cat-icon">🔵</div><div class="cat-name">Consumables</div><div class="cat-desc">Cap seals, water containers, rotary faucets, teflon tape, and more daily essentials.</div><span class="cat-count">12 products</span></div>
+      <div class="cat-card"><div class="cat-icon">🧪</div><div class="cat-name">Filters</div><div class="cat-desc">PP sediment filters, carbon blocks, RO membranes, resin softeners, and anthracite media.</div><span class="cat-count">8 products</span></div>
+      <div class="cat-card"><div class="cat-icon">⚙️</div><div class="cat-name">Machine Parts</div><div class="cat-desc">UV sterilizers, booster pumps, solenoid valves, pressure gauges, flow meters, and ball valves.</div><span class="cat-count">15 products</span></div>
+      <div class="cat-card"><div class="cat-icon">🔧</div><div class="cat-name">Station Tools</div><div class="cat-desc">Heat gun sealers, pH meters, spanner wrenches, filter housings, multimeters, and clamp meters.</div><span class="cat-count">10 products</span></div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how" id="how">
+    <div class="how-inner">
+      <p class="section-eyebrow">How It Works</p>
+      <h2>Order in 3 simple steps</h2>
+      <p class="section-sub">Built specifically for water refilling station owners. No middlemen, no hassle.</p>
+      <div class="how-steps">
+        <div class="step"><div class="step-num">1</div><h3>Create your station account</h3><p>Sign up with your station name, type, and address. Get instant access to the full product catalog.</p></div>
+        <div class="step"><div class="step-num">2</div><h3>Browse &amp; add to cart</h3><p>Shop by category — filters, consumables, machine parts, or tools. Compare ratings and order with one tap.</p></div>
+        <div class="step"><div class="step-num">3</div><h3>Track and receive delivery</h3><p>Get real-time updates via in-app messages. Your order arrives fast, right at your station's door.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <p class="section-eyebrow">Why HydroSpecs</p>
+    <h2>Built for station owners</h2>
+    <p class="section-sub">Every feature was designed around the workflow of a water refilling station operator.</p>
+    <div class="feat-grid">
+      <div class="feat-card"><div class="feat-icon">💬</div><h3>In-app messaging &amp; support</h3><p>Confirm your shipping address, track status, and chat with our team directly — no switching apps.</p></div>
+      <div class="feat-card"><div class="feat-icon">📦</div><h3>One-tap reordering</h3><p>Full order history with "Buy Again" on every item. Restocking your station takes seconds, not minutes.</p></div>
+      <div class="feat-card"><div class="feat-icon">🛒</div><h3>Smart cart with quantity control</h3><p>Select, deselect, and adjust quantities before checkout. Only pay for what you actually need.</p></div>
+      <div class="feat-card"><div class="feat-icon">⭐</div><h3>Verified product ratings</h3><p>Every rating is from a real station owner. Know what works before you commit to a purchase.</p></div>
+      <div class="feat-card"><div class="feat-icon">🔒</div><h3>Secure station profile</h3><p>Your address, contact info, and order history are stored safely and always ready for fast checkout.</p></div>
+      <div class="feat-card"><div class="feat-icon">📱</div><h3>iOS &amp; Android native app</h3><p>Fast, smooth, and designed for mobile. Manage your supplies from anywhere — even your station floor.</p></div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials" id="reviews">
+    <p class="section-eyebrow">What Station Owners Say</p>
+    <h2>Trusted across the Philippines</h2>
+    <p class="section-sub">Real reviews from real water refilling station operators.</p>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Before HydroSpecs, I had to call multiple suppliers just to get one order together. Now everything is in one app and delivered to my door. Grabe ang convenience."</p>
+        <div class="testi-author"><div class="testi-avatar">RP</div><div><div class="testi-name">Raquel Pascual</div><div class="testi-role">Station Owner · Urdaneta City, Pangasinan</div></div></div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"The Buy Again feature alone saves me so much time every month. My RO membrane and filters always arrive on time. Highly recommend to all station owners!"</p>
+        <div class="testi-author"><div class="testi-avatar">JM</div><div><div class="testi-name">Joel Macaraeg</div><div class="testi-role">Station Owner · Dagupan City</div></div></div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"I love that I can message them directly through the app. The prices are also very competitive — better than going to the market and dealing with multiple suppliers."</p>
+        <div class="testi-author"><div class="testi-avatar">AL</div><div><div class="testi-name">Anita Lacson</div><div class="testi-role">Station Owner · San Carlos City</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <p class="section-eyebrow" style="color:rgba(255,255,255,0.45)">Get Started Today</p>
+    <h2>Download HydroSpecs free</h2>
+    <p>Join hundreds of water refilling stations already saving time and money. Sign up takes under 2 minutes.</p>
+    <div class="cta-actions">
+      <button class="app-btn"><span class="app-btn-icon">🍎</span><span class="app-btn-text"><small>Download on the</small>App Store</span></button>
+      <button class="app-btn"><span class="app-btn-icon">▶</span><span class="app-btn-text"><small>Get it on</small>Google Play</span></button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand-logo">
+          <div class="logo-drop"><svg viewBox="0 0 24 24"><path d="M12 2C12 2 5 9.5 5 14.5C5 18.09 8.13 21 12 21C15.87 21 19 18.09 19 14.5C19 9.5 12 2 12 2Z"/></svg></div>
+          <span class="logo-name">HydroSpecs</span>
+        </div>
+        <div class="footer-tagline">EQUIP · SUPPLY · MAINTAIN</div>
+        <p class="footer-desc">Your all-in-one platform for water refilling station essentials. Serving operators across the Philippines.</p>
+      </div>
+      <div class="footer-col"><h4>Products</h4><ul><li><a href="#">Consumables</a></li><li><a href="#">Filters</a></li><li><a href="#">Machine Parts</a></li><li><a href="#">Station Tools</a></li></ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="#">About Us</a></li><li><a href="#">Contact</a></li><li><a href="#">Blog</a></li><li><a href="#">Careers</a></li></ul></div>
+      <div class="footer-col"><h4>Support</h4><ul><li><a href="#">Help Center</a></li><li><a href="#">Order Tracking</a></li><li><a href="#">Return Policy</a></li><li><a href="#">Privacy Policy</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 HydroSpecs. All rights reserved.</span>
+      <span>Made with 💧 for water refilling station owners</span>
+    </div>
+  </footer>
+
+</body>
+</html>
